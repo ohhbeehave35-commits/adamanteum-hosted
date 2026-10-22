@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adamanteum</title>
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#11151d">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><img src="/icon.svg" alt="" width="28" height="28"><span>Adamanteum</span></div>
+  <div class="whose" id="whose" aria-live="polite"></div>
+  <nav class="tabs" id="tabs" hidden>
+    <button data-tab="notes" class="on">Notes</button>
+    <button data-tab="map">Map</button>
+    <button data-tab="receipts">Receipts</button>
+    <button data-tab="keys" id="keysTab" hidden>Keys</button>
+  </nav>
+  <button class="anna" id="annaBtn" hidden aria-expanded="false">Talk to Assistant</button>
+</header>
+
+<main id="signedOut" class="center" hidden>
+  <img src="/icon.svg" alt="" width="72" height="72">
+  <h1>Adamanteum</h1>
+  <p id="signedOutText">Open Adamanteum from your home app. It opens already signed in to your company's own vault.</p>
+</main>
+
+<main id="app" hidden>
+  <section class="pane" data-pane="notes">
+    <aside class="list">
+      <form id="searchForm" role="search"><input id="q" type="search" placeholder="Search this vault" aria-label="Search this vault" autocomplete="off"></form>
+      <button id="newNote" class="primary">New note</button>
+      <p class="count" id="count"></p>
+      <ol id="results"></ol>
+    </aside>
+    <article class="reader" id="reader">
+      <div class="empty" id="readerEmpty">Pick a note, or write a new one.</div>
+      <div id="noteView" hidden>
+        <p class="path" id="notePath"></p>
+        <div class="body" id="noteBody"></div>
+        <div class="meta" id="noteMeta"></div>
+        <div class="row"><button id="editNote">Edit</button></div>
+        <h3>Connected notes</h3><ul id="noteLinks" class="links"></ul>
+      </div>
+      <form id="editor" hidden>
+        <label>Where it lives<input id="edPath" placeholder="Folder/Note name.md" required></label>
+        <label>Note<textarea id="edBody" rows="14" required></textarea></label>
+        <div class="row"><button class="primary" type="submit">Save to vault</button><button type="button" id="edCancel">Cancel</button></div>
+        <p class="hint" id="edHint"></p>
+      </form>
+    </article>
+  </section>
+
+  <section class="pane" data-pane="map" hidden>
+    <h2>Map</h2>
+    <p class="hint" id="mapHint">How this vault's notes connect. Each colour is a group of notes that link to each other. Click a point to open the note.</p>
+    <svg id="mapSvg" class="map" viewBox="0 0 1000 640" role="img" aria-label="Map of this vault's notes"></svg>
+  </section>
+
+  <section class="pane" data-pane="receipts" hidden>
+    <h2>Receipts</h2>
+    <p class="hint">Every read and write in this vault, who did it and when. Writes carry the note's fingerprint (sha256) and size.</p>
+    <table class="grid"><thead><tr><th>When</th><th>Who</th><th>What</th><th>Note</th><th>Fingerprint</th></tr></thead><tbody id="receiptRows"></tbody></table>
+  </section>
+
+  <section class="pane" data-pane="keys" hidden>
+    <h2>Keys</h2>
+    <p class="hint">A key lets one AI helper (Assistant, Claude, Codex, Grok or your own) into this vault and no other. Read keys can search and read; write keys can also save notes. Switch any key off and it stops at once.</p>
+    <form id="mintForm" class="row">
+      <input id="mintActor" placeholder="Who is it for (for example assistant)" required pattern="[a-z0-9][a-z0-9._:-]{1,59}">
+      <select id="mintScope"><option value="read">Read</option><option value="write">Read and write</option></select>
+      <button class="primary" type="submit">Make key</button>
+    </form>
+    <div id="newKey" class="newkey" hidden><p>Copy this key now. It is shown once.</p><code id="newKeyText"></code><button id="copyKey">Copy</button></div>
+    <table class="grid"><thead><tr><th>For</th><th>Can</th><th>Made</th><th>Last used</th><th></th></tr></thead><tbody id="keyRows"></tbody></table>
+  </section>
+</main>
+
+<aside class="annapanel" id="annaPanel" hidden aria-label="Assistant">
+  <div class="annahead"><strong>Assistant</strong><button id="annaClose" aria-label="Close">×</button></div>
+  <iframe id="annaFrame" title="Assistant" hidden></iframe>
+  <p id="annaNone" class="hint" hidden>Assistant opens here once your home app connects her to Adamanteum.</p>
+</aside>
+
+<dialog id="confirm"><form method="dialog"><p id="confirmText"></p><div class="row"><button value="yes" class="primary">Save</button><button value="no">Cancel</button></div></form></dialog>
+<script src="/app.js" type="module"></script>
+</body>
+</html>

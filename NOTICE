@@ -1,0 +1,9 @@
+Adamanteum hosted. The code in this repository is MIT licensed (see LICENSE).
+
+Runtime dependencies (installed by npm, not bundled here):
+  pg ......................... MIT (node-postgres contributors)
+  @vercel/functions .......... Apache-2.0 (Vercel)
+Test-only dependency:
+  @electric-sql/pglite ....... Apache-2.0 (ElectricSQL)
+
+The vault parsing code in lib/ is shared with Adamanteum desktop; see that repository's NOTICE for the code-parsing grammars it can load.

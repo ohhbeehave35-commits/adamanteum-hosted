@@ -1,0 +1,23 @@
+{
+  "name": "adamanteum-hosted",
+  "version": "0.7.0-hosted",
+  "private": true,
+  "description": "Adamanteum hosted: one private notes vault per company on Postgres, with a door any AI can use with a plain key.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "start": "node tests/serve-local.mjs --mock-cc",
+    "migrate": "node db/migrate.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/functions": "^3.10.3",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.11"
+  }
+}
